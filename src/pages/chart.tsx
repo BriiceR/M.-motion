@@ -8,8 +8,8 @@ import ListLink from '../components/listLink';
 
 
 export const Chart = () => {
-    const [loading, setLoading] = useState(true);
-    const [userData, setUserData] = useState<any>(null);
+    const [, setLoading] = useState(true);
+    const [, setUserData] = useState<any>(null);
     const navigate = useNavigate();
 
     useEffect(() => {

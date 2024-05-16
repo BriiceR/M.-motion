@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import Logout from '../components/logOut';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig';
@@ -15,7 +15,7 @@ export const Dashboard = () => {
     const [mood, setMood] = useState('');
     const [emotion, setEmotion] = useState('');
     const [description, setDescription] = useState('');
-    const [userData, setUserData] = useState<any>(null);
+    const [, setUserData] = useState<any>(null);
     const inputContainerRef = useRef<HTMLDivElement>(null);
 
     const handleDataSubmitted = () => {

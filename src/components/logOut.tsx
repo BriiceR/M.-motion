@@ -8,11 +8,11 @@ export const Logout = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const handleSignOut = async () => {
-
+        setError('');
         const auth = getAuth();
         signOut(auth).then(() => {
             navigate('/');
-        }).catch((error) => {
+        }).catch(() => {
             // An error happened.
         });
     };
