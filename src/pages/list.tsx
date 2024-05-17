@@ -9,7 +9,7 @@ import ChartLink from '../components/chartLink';
 import { useNavigate } from 'react-router-dom';
 
 export const List = () => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [userData, setUserData] = useState<any>(null);
     const [showMore, setShowMore] = useState(true); // État pour afficher plus de résultats
     const [showingResults, setShowingResults] = useState<any[]>([]); // État pour stocker les résultats à afficher
