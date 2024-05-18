@@ -81,7 +81,7 @@ export const List = () => {
                     <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-violet-700">M.</h1>
                     <div className='flex gap-4'>
                         <ChartLink />
-                        <PdfGenerator data={userData.data} />
+                        {userData && <PdfGenerator data={userData.data} />}
                         <Logout />
                     </div>
                 </div>
