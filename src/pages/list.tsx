@@ -72,9 +72,9 @@ export const List = () => {
 
     return (
         <div className="flex justify-center">
-            <div className="w-screen px-6 h-auto rounded-3xl xl:shadow-xl mb-4">
+            <div className="w-screen px-6 h-auto mb-4">
                 <div className="text-center flex justify-between items-center mt-2">
-                    <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-violet-700">M.</h1>
+                    <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-emerald-400">M:É</h1>
                     <div className='flex gap-4'>
                         <ChartLink />
                         {userData && <PdfGenerator data={userData.data} />}

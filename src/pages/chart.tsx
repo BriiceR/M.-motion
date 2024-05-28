@@ -40,7 +40,7 @@ export const Chart = () => {
         <div className="flex justify-center">
             <div className="w-screen px-6 h-screen rounded-3xl xl:shadow-xl">
                 <div className="text-center flex justify-between items-center mt-2">
-                    <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-violet-700">M.</h1>
+                    <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-emerald-400">M:É</h1>
                     <div className='flex gap-4'>
                         <ListLink />
                         <ListLink />

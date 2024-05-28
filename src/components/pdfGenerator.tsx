@@ -47,7 +47,7 @@ const PdfGenerator = ({ data }: { data: Entry[] }) => {    // Crée le document 
             {Array.isArray(chunkedData) && chunkedData.map((chunk: any, pageIndex) => (
                 <Page key={pageIndex}>
                     <View style={styles.section}>
-                        <Text style={styles.text}>M.</Text>
+                        <Text style={styles.text}>M:É</Text>
                         <View style={styles.line} />
                         {chunk.map((entry: Entry, entryIndex: number) => (
                             <View style={styles.box} key={entryIndex}>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         fontWeight: 'bold',
-        color: 'rgb(109 40 217)',
+        color: '#34D399',
     },
     line: {
         borderBottom: '1px solid gray',
