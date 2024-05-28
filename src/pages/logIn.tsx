@@ -27,7 +27,7 @@ const LogIn = () => {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="xl:w-[700px] px-10 h-[400px] rounded-3xl xl:shadow-xl">
-                <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-violet-700">Connexion</h1>
+                <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-emerald-400">Connexion</h1>
                 <hr />
                 <div className="flex justify-center mt-10">
                     <form onSubmit={handleSignIn} className="w-full md:w-[500px]">
@@ -51,7 +51,7 @@ const LogIn = () => {
                     </form>
                 </div>
                 <div className='flex justify-center mt-4'>
-                    <a href='/signIn' className="text-center text-sm mt-2 mb-2 text-violet-700">S'inscrire</a>
+                    <a href='/signIn' className="text-center text-sm mt-2 mb-2 text-emerald-400">S'inscrire</a>
                 </div>
                 {error && <p className="text-red-500 mt-4">{error}</p>}
             </div>

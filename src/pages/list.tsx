@@ -3,10 +3,8 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
 import { Loader } from "../components/loader";
-import Logout from "../components/logOut";
-import PdfGenerator from '../components/pdfGenerator';
-import ChartLink from '../components/chartLink';
 import { useNavigate } from 'react-router-dom';
+import Layout from '../components/ui/layout';
 
 export const List = () => {
     const [loading, setLoading] = useState(true);
@@ -71,48 +69,36 @@ export const List = () => {
     };
 
     return (
-        <div className="flex justify-center">
-            <div className="w-screen px-6 h-auto mb-4">
-                <div className="text-center flex justify-between items-center mt-2">
-                    <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-emerald-400">M:É</h1>
-                    <div className='flex gap-4'>
-                        <ChartLink />
-                        {userData && <PdfGenerator data={userData.data} />}
-                        <Logout />
-                    </div>
-                </div>
+        <Layout>
 
-                <hr />
-
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <div className="flex flex-col justify-center gap-4 py-10">
-                        {showingResults
-                            .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())
-                            .map((data: any, index: number) => (
-                                <div key={index} className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
-                                    <div className="flex justify-between items-center">
-                                        <p className="font-bold text-3xl">{data.mood}</p>
-                                        <p className="text-sm">{formatDate(data.time)}</p>
-                                    </div>
-                                    <p className="mt-2">{data.emotion}</p>
-                                    <p>{data.description}</p>
+            {loading ? (
+                <Loader />
+            ) : (
+                <div className="flex flex-col justify-center gap-4 py-10">
+                    {showingResults
+                        .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())
+                        .map((data: any, index: number) => (
+                            <div key={index} className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
+                                <div className="flex justify-between items-center">
+                                    <p className="font-bold text-3xl">{data.mood}</p>
+                                    <p className="text-sm">{formatDate(data.time)}</p>
                                 </div>
-                            ))}
-                    </div>
-                )}
-
-                {showMore && !loading && (
-                    <div className="flex justify-center mb-4" style={{ minHeight: '50px' }}>
-                        <button onClick={handleShowMore} className="py-3 px-6 bg-orange-300 text-white rounded-md text-sm shadow-[0_8px_30px_rgb(0,0,0,0.12)]">Afficher 5 résultats supplémentaires</button>
-                    </div>
-                )}
-
-                <div className="flex justify-center">
-                    <a href="/dashboard" className="py-3 px-6 bg-orange-300 text-white rounded-md text-sm shadow-[0_8px_30px_rgb(0,0,0,0.12)]">Retour</a>
+                                <p className="mt-2">{data.emotion}</p>
+                                <p>{data.description}</p>
+                            </div>
+                        ))}
                 </div>
+            )}
+
+            {showMore && !loading && (
+                <div className="flex justify-center mb-4" style={{ minHeight: '50px' }}>
+                    <button onClick={handleShowMore} className="py-3 px-6 bg-orange-300 text-white rounded-md text-sm shadow-[0_8px_30px_rgb(0,0,0,0.12)]">Afficher 5 résultats supplémentaires</button>
+                </div>
+            )}
+
+            <div className="flex justify-center">
+                <a href="/dashboard" className="py-3 px-6 bg-orange-300 text-white rounded-md text-sm shadow-[0_8px_30px_rgb(0,0,0,0.12)]">Retour</a>
             </div>
-        </div>
+        </Layout>
     );
 };
