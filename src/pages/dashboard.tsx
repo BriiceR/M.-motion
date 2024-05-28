@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase/firebaseConfig';
 import { Validated } from '../components/validated';
 import Layout from '../components/ui/layout';
+import { Select } from '../components/select';
 
 export const Dashboard = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -69,7 +70,10 @@ export const Dashboard = () => {
             <div ref={inputContainerRef} className="mt-16">
                 {mood ? (
                     <>
-                        <p className='text-3xl mb-4'>{mood}</p>
+                        <div className="flex mb-4 items-center">
+                            <p className='text-3xl'>{mood}</p>
+                            <Select />
+                        </div>
                         <input
                             type="text"
                             placeholder="émotion"
