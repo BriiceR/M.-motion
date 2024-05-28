@@ -4,13 +4,14 @@ import { db } from '../firebase/firebaseConfig';
 
 interface ValidatedProps {
     mood: string;
+    category: string;
     emotion: string;
     description: string;
     userId: string;
     onDataSubmitted: () => void;
 }
 
-export const Validated: React.FC<ValidatedProps> = ({ mood, emotion, description, userId, onDataSubmitted }) => {
+export const Validated: React.FC<ValidatedProps> = ({ mood, category, emotion, description, userId, onDataSubmitted }) => {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         console.log('Submitted to database');
@@ -19,6 +20,7 @@ export const Validated: React.FC<ValidatedProps> = ({ mood, emotion, description
             const newData = {
                 time: new Date().toISOString(),
                 mood,
+                category,
                 emotion,
                 description
             };

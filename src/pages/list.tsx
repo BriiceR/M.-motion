@@ -81,8 +81,10 @@ export const List = () => {
                             <div key={index} className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
                                 <div className="flex justify-between items-center">
                                     <p className="font-bold text-3xl">{data.mood}</p>
+                                    <p className="mt-2">{data.category}</p>
                                     <p className="text-sm">{formatDate(data.time)}</p>
                                 </div>
+
                                 <p className="mt-2">{data.emotion}</p>
                                 <p>{data.description}</p>
                             </div>

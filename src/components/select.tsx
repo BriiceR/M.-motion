@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef, SetStateAction, RefObject } from 'react';
 
-export const Select = () => {
+type SelectProps = {
+    onCategorySelect: (value: string) => void;
+};
+
+export const Select = ({ onCategorySelect }: SelectProps) => {
     const [selectedOption, setSelectedOption] = useState('Catégorie');
     const [selectedColor, setSelectedColor] = useState('');
     const [isOpen, setIsOpen] = useState(false);
@@ -9,11 +13,13 @@ export const Select = () => {
     const options = [
         { value: 'Famille', color: 'bg-red-500' },
         { value: 'Couple', color: 'bg-blue-300' },
-        { value: 'Travail', color: 'bg-green-300' }
+        { value: 'Santé', color: 'bg-green-300' },
+        { value: 'Travail', color: 'bg-yellow-300' },
     ];
 
-    const handleOptionClick = (value: SetStateAction<string>, color: SetStateAction<string>) => {
+    const handleOptionClick = (value: string, color: SetStateAction<string>) => {
         setSelectedOption(value);
+        onCategorySelect(value);
         setSelectedColor(color);
         setIsOpen(false);
     };

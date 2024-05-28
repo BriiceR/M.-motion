@@ -16,8 +16,10 @@ export const Dashboard = () => {
     const [description, setDescription] = useState('');
     const [, setUserData] = useState<any>(null);
     const inputContainerRef = useRef<HTMLDivElement>(null);
+    const [category, setCategory] = useState('');
 
     const handleDataSubmitted = () => {
+        console.log(mood, emotion, description, category);
         setMood('');
         setEmotion('');
         setDescription('');
@@ -72,7 +74,7 @@ export const Dashboard = () => {
                     <>
                         <div className="flex mb-4 items-center">
                             <p className='text-3xl'>{mood}</p>
-                            <Select />
+                            <Select onCategorySelect={setCategory} />
                         </div>
                         <input
                             type="text"
@@ -90,7 +92,7 @@ export const Dashboard = () => {
                             className="h-40 py-3 p-5 rounded-md bg-zinc-50 w-full outline-orange-200 mb-4 focus:outline-orange-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
                         />
                         <div className="flex justify-end ">
-                            <Validated mood={mood} emotion={emotion} description={description} userId={user?.uid ?? ''} onDataSubmitted={handleDataSubmitted} />
+                            <Validated mood={mood} emotion={emotion} description={description} userId={user?.uid ?? ''} onDataSubmitted={handleDataSubmitted} category={category} />
                         </div>
                     </>
                 ) : (
