@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
+// import { doc, getDoc } from 'firebase/firestore';
+// import { db } from '../firebase/firebaseConfig';
 import { Loader } from "../components/loader";
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/ui/layout';
+import { useStore } from '../store/useStore';
+
 
 export const List = () => {
-    const [loading, setLoading] = useState(true);
-    const [userData, setUserData] = useState<any>(null);
+    const [loading,] = useState(false);
+    // const [userData, setUserData] = useState<any>(null);
     const [showMore, setShowMore] = useState(true);
     const [showingResults, setShowingResults] = useState<any[]>([]);
     const navigate = useNavigate();
+    const { userData, fetchUserData } = useStore();
+
 
     const formatDate = (dateTimeString: string) => {
         const options: Intl.DateTimeFormatOptions = {
@@ -26,36 +30,20 @@ export const List = () => {
 
     useEffect(() => {
         const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+        const unsubscribe = onAuthStateChanged(auth, (authUser) => {
             if (authUser) {
-                const userId = authUser.uid;
-                const userCollectionRef = doc(db, 'users', userId);
-                try {
-                    const userDoc = await getDoc(userCollectionRef);
-                    if (userDoc.exists()) {
-                        const userData = userDoc.data();
-                        setUserData(userData);
-                        setShowingResults(userData.data.slice(Math.max(userData.data.length - 5, 0)));
-                        if (userData.data.length <= 5) {
-                            setShowMore(false);
-                        }
-                    } else {
-                        console.log("Aucune donnée d'utilisateur trouvée pour l'utilisateur actuel.");
-                    }
-                } catch (error) {
-                    console.error("Erreur lors de la récupération des données utilisateur:", error);
-                }
+                fetchUserData();
             } else {
                 console.log("L'utilisateur n'est pas connecté.");
-                navigate('/')
+                navigate('/');
             }
-            setLoading(false);
         });
-
         return () => {
             unsubscribe();
         };
-    }, []);
+    }, [fetchUserData, navigate]);
+
+    console.log(userData)
 
     const handleShowMore = () => {
         setShowingResults(prevResults => {
@@ -81,7 +69,9 @@ export const List = () => {
                             <div key={index} className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
                                 <div className="flex justify-between items-center">
                                     <p className="font-bold text-3xl">{data.mood}</p>
-                                    <p className="mt-2">{data.category}</p>
+                                    {data.category &&
+                                        <p className="bg-blue-300 text-white p-1 rounded-md">{data.category}</p>
+                                    }
                                     <p className="text-sm">{formatDate(data.time)}</p>
                                 </div>
 
@@ -104,3 +94,4 @@ export const List = () => {
         </Layout>
     );
 };
+
