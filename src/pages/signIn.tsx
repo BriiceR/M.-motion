@@ -30,7 +30,7 @@ export const SignIn = () => {
             const userRef = doc(db, 'users', user.uid);
             await setDoc(userRef, {}); // Création d'un document vide
 
-            navigate('/dashboard');
+            navigate('/app/dashboard');
         } catch (error: any) {
             setError(error.message);
         }

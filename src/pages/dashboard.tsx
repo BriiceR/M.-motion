@@ -6,6 +6,7 @@ import { db } from '../firebase/firebaseConfig';
 import { Validated } from '../components/validated';
 import Layout from '../components/ui/layout';
 import { Select } from '../components/select';
+import TabBar from '../components/tabBar';
 
 export const Dashboard = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -101,6 +102,7 @@ export const Dashboard = () => {
                     </div>
                 )}
             </div>
+            <TabBar />
         </Layout >
     );
 };
