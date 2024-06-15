@@ -87,10 +87,6 @@ export const List = () => {
                     <button onClick={handleShowMore} className="py-3 px-6 bg-orange-300 text-white rounded-md text-sm shadow-[0_8px_30px_rgb(0,0,0,0.12)]">Afficher 5 résultats supplémentaires</button>
                 </div>
             )}
-
-            <div className="flex justify-center">
-                <a href="/dashboard" className="py-3 px-6 bg-orange-300 text-white rounded-md text-sm shadow-[0_8px_30px_rgb(0,0,0,0.12)]">Retour</a>
-            </div>
         </Layout>
     );
 };
