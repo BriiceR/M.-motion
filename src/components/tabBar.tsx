@@ -20,7 +20,7 @@ const TabBar = () => {
 
     return (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-md">
-            <div className="relative flex justify-around p-4 mb-2">
+            <div className="relative flex justify-around p-4 mb-4">
                 <div
                     className="absolute top-[-0px] h-1 bg-orange-300 transition-all duration-300"
                     style={{ left: `${(100 / tabs.length) * activeIndex}%`, width: `${100 / tabs.length}%` }}
