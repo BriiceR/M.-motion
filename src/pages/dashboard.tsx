@@ -63,18 +63,28 @@ export const Dashboard = () => {
 
     return (
         <Layout>
-            <div className="text-center flex justify-around items-center mt-16">
-                <button onClick={() => setMood('😢')} className='text-5xl'><img src='/emoji_1.svg' className='w-16 ' /></button>
-                <button onClick={() => setMood('🙁')} className='text-5xl'>🙁</button>
-                <button onClick={() => setMood('😐')} className='text-5xl'>😐</button>
-                <button onClick={() => setMood('😊')} className='text-5xl'>😊</button>
-                <button onClick={() => setMood('😄')} className='text-5xl'>😄</button>
+            <div className="text-center flex justify-between items-center mt-16">
+                <button onClick={() => setMood('/emoji_1.svg')} className='text-5xl'>
+                    <img src='/emoji_1.svg' className='w-16' alt="Sad" />
+                </button>
+                <button onClick={() => setMood('/emoji_2.svg')} className='text-5xl'>
+                    <img src='/emoji_2.svg' className='w-16' alt="Unhappy" />
+                </button>
+                <button onClick={() => setMood('/emoji_3.svg')} className='text-5xl'>
+                    <img src='/emoji_3.svg' className='w-16' alt="Neutral" />
+                </button>
+                <button onClick={() => setMood('/emoji_4.svg')} className='text-5xl'>
+                    <img src='/emoji_4.svg' className='w-16' alt="Happy" />
+                </button>
+                <button onClick={() => setMood('/emoji_5.svg')} className='text-5xl'>
+                    <img src='/emoji_5.svg' className='w-16' alt="Very Happy" />
+                </button>
             </div>
             <div ref={inputContainerRef} className="mt-16">
                 {mood ? (
                     <>
                         <div className="flex mb-4 items-center">
-                            <p className='text-3xl'>{mood}</p>
+                            <img src={mood} className='w-12' alt="Selected Mood" />
                             <Select onCategorySelect={setCategory} />
                         </div>
                         <input

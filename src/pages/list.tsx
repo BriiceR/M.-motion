@@ -63,7 +63,7 @@ export const List = () => {
                         .map((data: any, index: number) => (
                             <div key={index} className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
                                 <div className="flex justify-between items-center">
-                                    <p className="font-bold text-3xl">{data.mood}</p>
+                                    <img src={data.mood} className='w-12' alt="Selected Mood" />
                                     {data.category &&
                                         <p className={`${options.find(opt => opt.value === data.category)?.color} text-white py-1 px-2 rounded-md`}>{data.category}</p>
                                     }

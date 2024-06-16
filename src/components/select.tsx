@@ -47,9 +47,10 @@ export const Select = ({ onCategorySelect }: SelectProps) => {
                     <span className={`w-3 h-3 rounded-full ${selectedColor} mr-2`}></span>
                 )}
                 {selectedOption}
+                <img src='/arrow.svg' className='w-6' alt="Select" />
             </div>
             {isOpen && (
-                <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg z-10">
+                <ul className="absolute mt-1 w-full rounded-md bg-zinc-50 shadow-lg z-10">
                     <li
                         className="p-2 cursor-pointer hover:bg-gray-200 flex items-center"
                         onClick={() => handleOptionClick('Catégorie', '')}
