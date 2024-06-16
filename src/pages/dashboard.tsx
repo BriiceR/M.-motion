@@ -64,7 +64,7 @@ export const Dashboard = () => {
     return (
         <Layout>
             <div className="text-center flex justify-around items-center mt-16">
-                <button onClick={() => setMood('😢')} className='text-5xl'>😢</button>
+                <button onClick={() => setMood('😢')} className='text-5xl'><img src='/emoji_1.svg' className='w-16 ' /></button>
                 <button onClick={() => setMood('🙁')} className='text-5xl'>🙁</button>
                 <button onClick={() => setMood('😐')} className='text-5xl'>😐</button>
                 <button onClick={() => setMood('😊')} className='text-5xl'>😊</button>
