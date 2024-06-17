@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/ui/layout';
 import { useStore } from '../store/useStore';
+import Logout from '../components/logOut';
 
 export const Profil = () => {
     const { userData, fetchUserData } = useStore();
@@ -29,6 +30,7 @@ export const Profil = () => {
         <Layout>
             <div className="flex flex-col justify-center gap-4 py-10">
                 <p className="text-center text-orange-300">Prochainement...profil</p>
+                <Logout />
             </div>
         </Layout>
     );
