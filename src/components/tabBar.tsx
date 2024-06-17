@@ -8,7 +8,7 @@ const TabBar = () => {
     const tabs = [
         { to: '/app/list', icon: '/list.svg', alt: 'list' },
         { to: '/app/chart', icon: '/chart.svg', alt: 'chart' },
-        { to: '/app/dashboard', icon: '/home.svg', alt: 'dashboard' },
+        { to: '/app/dashboard', icon: '/emoji_4.svg', alt: 'dashboard' },
         { to: '/app/idea', icon: '/idea.svg', alt: 'idea' },
         { to: '/app/profil', icon: '/profil.svg', alt: 'profil' },
     ];
@@ -36,7 +36,7 @@ const TabBar = () => {
                             src={tab.icon}
                             alt={tab.alt}
                             className={`w-8 h-8 ${tab.to === '/app/dashboard'
-                                ? 'bg-orange-300 rounded-full'
+                                ? 'bg-white rounded-full'
                                 : ''
                                 }`}
                         />

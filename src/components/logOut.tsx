@@ -18,7 +18,7 @@ export const Logout = () => {
 
     return (
         <div>
-            <button onClick={handleSignOut} className="py-2 px-4 bg-orange-300 text-white rounded-md text-sm w-full">
+            <button onClick={handleSignOut} className="py-3 bg-orange-300 text-white w-full rounded-md font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 Déconnection
             </button>
             {error && <p>{error}</p>}
