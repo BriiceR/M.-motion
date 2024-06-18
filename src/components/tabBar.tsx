@@ -6,11 +6,11 @@ const TabBar = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const tabs = [
-        { to: '/app/list', icon: '/list.svg', alt: 'liste' },
-        { to: '/app/chart', icon: '/chart.svg', alt: 'stat' },
-        { to: '/app/dashboard', icon: '/emoji_4.svg', alt: '' },
-        { to: '/app/idea', icon: '/idea.svg', alt: 'idée' },
-        { to: '/app/profil', icon: '/profil.svg', alt: 'profil' },
+        { to: '/app/list', icon: '/list.svg', alt: 'liste', className: 'w-8 h-8' },
+        { to: '/app/chart', icon: '/chart.svg', alt: 'stat', className: 'w-8 h-8' },
+        { to: '/app/dashboard', icon: '/emoji_4.svg', alt: '', className: 'w-12 h-12 p-2 bg-orange-300/50 rounded-md' },
+        { to: '/app/idea', icon: '/idea.svg', alt: 'idée', className: 'w-8 h-8' },
+        { to: '/app/profil', icon: '/profil.svg', alt: 'profil', className: 'w-8 h-8' },
     ];
 
     useEffect(() => {
@@ -36,10 +36,7 @@ const TabBar = () => {
                             <img
                                 src={tab.icon}
                                 alt={tab.alt}
-                                className={`w-8 h-8 ${tab.to === '/app/dashboard'
-                                    ? 'w-12 h-12 p-2 bg-orange-300/50 rounded-md'
-                                    : ''
-                                    }`}
+                                className={tab.className}
                             />
                             <span className="text-xs mt-1">{tab.alt}</span>
                         </div>
