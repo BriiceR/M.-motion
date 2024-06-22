@@ -15,16 +15,21 @@ const LogIn = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigate('/app/dashboard');
-            } else {
-                setLoading(false);
-            }
-        });
+        const timer = setTimeout(() => {
+            const unsubscribe = onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    navigate('/app/dashboard');
+                } else {
+                    setLoading(false);
+                }
+            });
 
-        return () => unsubscribe();
+            return () => unsubscribe();
+        }, 10000); // Delay of 10 seconds
+
+        return () => clearTimeout(timer);
     }, [auth, navigate]);
+
 
     const handleSignIn = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -39,6 +44,7 @@ const LogIn = () => {
     };
 
     if (loading) {
+
         return <Loader />;
     }
 
