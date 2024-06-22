@@ -45,7 +45,7 @@ const LogIn = () => {
 
     if (loading) {
 
-        return <Loader />;
+        return <Loader loading={loading} />;
     }
 
     return (
