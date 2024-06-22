@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../components/loader';
 
 const LogIn = () => {
     const [email, setEmail] = useState('');
@@ -38,7 +39,7 @@ const LogIn = () => {
     };
 
     if (loading) {
-        return <div className="flex justify-center items-center h-screen">Chargement...</div>;
+        return <Loader />;
     }
 
     return (
