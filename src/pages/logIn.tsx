@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,9 +8,22 @@ const LogIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigate('/app/dashboard');
+            } else {
+                setLoading(false);
+            }
+        });
+
+        return () => unsubscribe();
+    }, [auth, navigate]);
 
     const handleSignIn = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -23,6 +36,10 @@ const LogIn = () => {
             setError(error.message);
         }
     };
+
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen">Chargement...</div>;
+    }
 
     return (
         <div className="flex justify-center items-center h-screen">
@@ -55,7 +72,6 @@ const LogIn = () => {
                 </div>
                 {error && <p className="text-red-500 mt-4">{error}</p>}
             </div>
-
         </div>
     );
 }
