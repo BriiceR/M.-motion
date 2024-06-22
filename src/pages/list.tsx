@@ -5,7 +5,7 @@ import Layout from '../components/ui/layout';
 import { useStore } from '../store/useStore';
 
 export const List = () => {
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
     const [showingResults, setShowingResults] = useState<any[]>([]);
     const navigate = useNavigate();
     const { userData, fetchUserData } = useStore();
