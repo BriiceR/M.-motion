@@ -25,7 +25,7 @@ const LogIn = () => {
             });
 
             return () => unsubscribe();
-        }, 10000); // Delay of 10 seconds
+        }, 3000); // Delay of 10 seconds
 
         return () => clearTimeout(timer);
     }, [auth, navigate]);
@@ -45,7 +45,7 @@ const LogIn = () => {
 
     if (loading) {
 
-        return <Loader loading={loading} />;
+        return <Loader />;
     }
 
     return (
