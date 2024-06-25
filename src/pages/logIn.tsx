@@ -44,7 +44,6 @@ const LogIn = () => {
     };
 
     if (loading) {
-
         return <Loader />;
     }
 
