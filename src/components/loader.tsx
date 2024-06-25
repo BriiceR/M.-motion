@@ -15,7 +15,7 @@ export const Loader = () => {
 
     return (
         <div className={`flex justify-center items-center h-screen bg-zinc-50 transition-opacity duration-2000 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}>
-            <img className="w-24 h-24" src={Logo} alt="loader" />
+            <img src={Logo} alt="loader" />
         </div>
     );
 };

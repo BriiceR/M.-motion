@@ -25,7 +25,7 @@ const LogIn = () => {
             });
 
             return () => unsubscribe();
-        }, 3000); // Delay of 10 seconds
+        }, 3000); // Delay of 3 seconds
 
         return () => clearTimeout(timer);
     }, [auth, navigate]);
