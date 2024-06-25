@@ -7,8 +7,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div className="w-screen h-screen">
                 <Header />
 
-
-                {children}
+                <div className='px-6 pt-10 mt-10'>
+                    {children}
+                </div>
             </div>
         </div>
     );

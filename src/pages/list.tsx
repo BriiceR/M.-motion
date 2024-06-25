@@ -54,7 +54,7 @@ export const List = () => {
     return (
         <Layout>
 
-            <div className="flex flex-col justify-center gap-4 pt-10 pb-24 px-6 mt-10">
+            <div className="flex flex-col justify-center gap-4 pb-24">
                 {showingResults
                     .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())
                     .map((data: any, index: number) => (

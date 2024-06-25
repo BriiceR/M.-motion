@@ -63,7 +63,7 @@ export const Dashboard = () => {
 
     return (
         <Layout>
-            <div className="text-center flex justify-between items-center mt-16">
+            <div className="text-center flex justify-between items-center mt-10">
                 <button onClick={() => setMood('/emoji_1.svg')} className='text-5xl'>
                     <img src='/emoji_1.svg' className='w-16' alt="Sad" />
                 </button>
