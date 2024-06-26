@@ -7,7 +7,7 @@ import { Chart } from './pages/chart';
 import { SignIn } from './pages/signIn';
 import { Idea } from './pages/idea';
 import { Profil } from './pages/profil';
-import Layout from './components/layout';
+import Layout from './components/ui/layout';
 
 const App: React.FC = () => {
   return (

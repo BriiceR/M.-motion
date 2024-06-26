@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../components/ui/layout';
 import { useStore } from '../store/useStore';
 
 export const List = () => {
@@ -52,10 +51,11 @@ export const List = () => {
     ];
 
     return (
-        <Layout>
 
-            <div className="flex flex-col justify-center gap-4 pb-24">
-                {showingResults
+
+        < div className="flex flex-col justify-center gap-4 pb-24" >
+            {
+                showingResults
                     .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())
                     .map((data: any, index: number) => (
                         <div key={index} className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
@@ -70,9 +70,10 @@ export const List = () => {
                             <p className="mt-2">{data.emotion}</p>
                             <p>{data.description}</p>
                         </div>
-                    ))}
-            </div>
+                    ))
+            }
+        </div >
 
-        </Layout>
+
     );
 };

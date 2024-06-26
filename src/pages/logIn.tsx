@@ -3,13 +3,11 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
-import { Loader } from '../components/loader';
 
 const LogIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(true);
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const navigate = useNavigate();
@@ -19,13 +17,11 @@ const LogIn = () => {
             const unsubscribe = onAuthStateChanged(auth, (user) => {
                 if (user) {
                     navigate('/app/dashboard');
-                } else {
-                    setLoading(false);
                 }
             });
 
             return () => unsubscribe();
-        }, 3000); // Delay of 3 seconds
+        });
 
         return () => clearTimeout(timer);
     }, [auth, navigate]);
@@ -43,9 +39,6 @@ const LogIn = () => {
         }
     };
 
-    if (loading) {
-        return <Loader />;
-    }
 
     return (
         <div className="flex justify-center items-center h-screen">

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../components/ui/layout';
 import { useStore } from '../store/useStore';
 
 export const Chart = () => {
@@ -26,10 +25,10 @@ export const Chart = () => {
     console.log(userData)
 
     return (
-        <Layout>
-            <div className="flex flex-col justify-center gap-4 py-10">
-                <p className="text-center text-orange-300">Prochainement...chart</p>
-            </div>
-        </Layout>
+
+        <div className="flex flex-col justify-center gap-4 py-10">
+            <p className="text-center text-orange-300">Prochainement...chart</p>
+        </div>
+
     );
 };
