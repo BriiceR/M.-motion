@@ -6,7 +6,6 @@ import { db } from '../firebase/firebaseConfig';
 import { Validated } from '../components/validated';
 import { Select } from '../components/select';
 import TabBar from '../components/tabBar';
-import { Loader } from '../components/loader';
 
 export const Dashboard = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -18,7 +17,6 @@ export const Dashboard = () => {
     const [, setUserData] = useState<any>(null);
     const inputContainerRef = useRef<HTMLDivElement>(null);
     const [category, setCategory] = useState('');
-    const [loading, setLoading] = useState(true);
 
     const handleDataSubmitted = () => {
         console.log(mood, emotion, description, category);
@@ -62,72 +60,61 @@ export const Dashboard = () => {
         };
     }, [auth, navigate]);
 
-    useEffect(() => {
-        // Simulez un chargement de page
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000); // Délai de 3 secondes
 
-        return () => clearTimeout(timer);
-    }, []);
 
     return (
         <>
-            {loading ? (
-                <Loader />) : (
-                <>
-                    <div className="text-center flex justify-between items-center mt-10">
-                        <button onClick={() => setMood('/emoji_1.svg')} className='text-5xl'>
-                            <img src='/emoji_1.svg' className='w-16' alt="Sad" />
-                        </button>
-                        <button onClick={() => setMood('/emoji_2.svg')} className='text-5xl'>
-                            <img src='/emoji_2.svg' className='w-16' alt="Unhappy" />
-                        </button>
-                        <button onClick={() => setMood('/emoji_3.svg')} className='text-5xl'>
-                            <img src='/emoji_3.svg' className='w-16' alt="Neutral" />
-                        </button>
-                        <button onClick={() => setMood('/emoji_4.svg')} className='text-5xl'>
-                            <img src='/emoji_4.svg' className='w-16' alt="Happy" />
-                        </button>
-                        <button onClick={() => setMood('/emoji_5.svg')} className='text-5xl'>
-                            <img src='/emoji_5.svg' className='w-16' alt="Very Happy" />
-                        </button>
+            <div className="text-center flex justify-between items-center mt-10">
+                <button onClick={() => setMood('/emoji_1.svg')} className='text-5xl'>
+                    <img src='/emoji_1.svg' className='w-16' alt="Sad" />
+                </button>
+                <button onClick={() => setMood('/emoji_2.svg')} className='text-5xl'>
+                    <img src='/emoji_2.svg' className='w-16' alt="Unhappy" />
+                </button>
+                <button onClick={() => setMood('/emoji_3.svg')} className='text-5xl'>
+                    <img src='/emoji_3.svg' className='w-16' alt="Neutral" />
+                </button>
+                <button onClick={() => setMood('/emoji_4.svg')} className='text-5xl'>
+                    <img src='/emoji_4.svg' className='w-16' alt="Happy" />
+                </button>
+                <button onClick={() => setMood('/emoji_5.svg')} className='text-5xl'>
+                    <img src='/emoji_5.svg' className='w-16' alt="Very Happy" />
+                </button>
+            </div>
+            <div ref={inputContainerRef} className="mt-16">
+                {mood ? (
+                    <>
+                        <div className="flex mb-4 items-center">
+                            <img src={mood} className='w-12' alt="Selected Mood" />
+                            <Select onCategorySelect={setCategory} />
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="émotion"
+                            value={emotion}
+                            onChange={(e) => setEmotion(e.target.value)}
+                            required={true}
+                            className="py-3 p-5 rounded-md bg-zinc-50 w-full outline-orange-200 mb-4 focus:outline-orange-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+                        />
+                        <textarea
+                            placeholder="pourquoi ?"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required={true}
+                            className="h-40 py-3 p-5 rounded-md bg-zinc-50 w-full outline-orange-200 mb-4 focus:outline-orange-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+                        />
+                        <div className="flex justify-end ">
+                            <Validated mood={mood} emotion={emotion} description={description} userId={user?.uid ?? ''} onDataSubmitted={handleDataSubmitted} category={category} />
+                        </div>
+                    </>
+                ) : (
+                    <div className="flex justify-center items-center h-auto mt-36 ">
+                        <h2 className="text-6xl font-bold text-orange-300/40">Comment vous sentez-vous aujourd'hui ?</h2>
                     </div>
-                    <div ref={inputContainerRef} className="mt-16">
-                        {mood ? (
-                            <>
-                                <div className="flex mb-4 items-center">
-                                    <img src={mood} className='w-12' alt="Selected Mood" />
-                                    <Select onCategorySelect={setCategory} />
-                                </div>
-                                <input
-                                    type="text"
-                                    placeholder="émotion"
-                                    value={emotion}
-                                    onChange={(e) => setEmotion(e.target.value)}
-                                    required={true}
-                                    className="py-3 p-5 rounded-md bg-zinc-50 w-full outline-orange-200 mb-4 focus:outline-orange-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-                                />
-                                <textarea
-                                    placeholder="pourquoi ?"
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    required={true}
-                                    className="h-40 py-3 p-5 rounded-md bg-zinc-50 w-full outline-orange-200 mb-4 focus:outline-orange-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-                                />
-                                <div className="flex justify-end ">
-                                    <Validated mood={mood} emotion={emotion} description={description} userId={user?.uid ?? ''} onDataSubmitted={handleDataSubmitted} category={category} />
-                                </div>
-                            </>
-                        ) : (
-                            <div className="flex justify-center items-center h-auto mt-36 ">
-                                <h2 className="text-6xl font-bold text-orange-300/40">Comment vous sentez-vous aujourd'hui ?</h2>
-                            </div>
-                        )}
-                    </div>
-                    <TabBar />
-                </>
-            )}
+                )}
+            </div>
+            <TabBar />
+
         </>
     );
 };

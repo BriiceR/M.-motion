@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 const TabBar = () => {
     const location = useLocation();
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [activeIndex, setActiveIndex] = useState(2);
 
     const tabs = [
         { to: '/app/list', icon: '/list.svg', alt: 'liste', className: 'w-8 h-8' },

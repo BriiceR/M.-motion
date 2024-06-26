@@ -8,8 +8,26 @@ import { SignIn } from './pages/signIn';
 import { Idea } from './pages/idea';
 import { Profil } from './pages/profil';
 import Layout from './components/ui/layout';
+import { useEffect, useState } from 'react';
+import { Loader } from './components/loader';
+
 
 const App: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsFading(true);
+      setTimeout(() => setLoading(false), 2000);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <Loader isFading={isFading} />;
+  }
+
   return (
     <Router>
       <Routes>
