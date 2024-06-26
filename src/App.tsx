@@ -19,30 +19,32 @@ const App: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsFading(true);
-      setTimeout(() => setLoading(false), 2000);
-    }, 2000);
+      setTimeout(() => setLoading(false), 700);
+    }, 1000);
+
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return <Loader isFading={isFading} />;
-  }
-
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signIn" element={<SignIn />} />
+      <div className={`relative ${loading ? 'overflow-hidden' : ''}`}>
+        {loading && <Loader isFading={isFading} />}
+        <div className={`${loading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-700 ease-in-out`}>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/signIn" element={<SignIn />} />
 
-        <Route path="/app" element={<Layout />}>
-          <Route index element={<Navigate to="/app/dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="list" element={<List />} />
-          <Route path="chart" element={<Chart />} />
-          <Route path="idea" element={<Idea />} />
-          <Route path="profil" element={<Profil />} />
-        </Route>
-      </Routes>
+            <Route path="/app" element={<Layout />}>
+              <Route index element={<Navigate to="/app/dashboard" />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="list" element={<List />} />
+              <Route path="chart" element={<Chart />} />
+              <Route path="idea" element={<Idea />} />
+              <Route path="profil" element={<Profil />} />
+            </Route>
+          </Routes>
+        </div>
+      </div>
     </Router>
   );
 };
