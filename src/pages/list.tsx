@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import PdfGenerator from '../components/pdfGenerator';
 
 export const List = () => {
     const [, setLoading] = useState(false);
@@ -54,6 +55,7 @@ export const List = () => {
 
 
         < div className="flex flex-col justify-center gap-4 pb-24" >
+            <PdfGenerator data={showingResults} />
             {
                 showingResults
                     .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())
