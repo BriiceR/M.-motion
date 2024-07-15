@@ -11,7 +11,7 @@ export const List = () => {
     const navigate = useNavigate();
     const { userData, fetchUserData } = useStore();
 
-    const [filter, setFilter] = useState('Toute la liste');
+    const [, setFilter] = useState('Toute la liste');
 
     const handleToggle = (value: string) => {
         setFilter(value);
@@ -56,6 +56,8 @@ export const List = () => {
         { value: 'Couple', color: 'bg-blue-300' },
         { value: 'Santé', color: 'bg-green-300' },
         { value: 'Travail', color: 'bg-yellow-300' },
+        { value: 'Social', color: 'bg-purple-300' },
+        { value: 'Autre', color: 'bg-gray-300' },
     ];
 
     return (
