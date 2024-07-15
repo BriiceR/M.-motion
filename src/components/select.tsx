@@ -11,10 +11,12 @@ export const Select = ({ onCategorySelect }: SelectProps) => {
     const selectRef: RefObject<HTMLDivElement> = useRef(null);
 
     const options = [
-        { value: 'Famille', color: 'bg-red-500' },
+        { value: 'Famille', color: 'bg-red-300' },
         { value: 'Couple', color: 'bg-blue-300' },
         { value: 'Santé', color: 'bg-green-300' },
         { value: 'Travail', color: 'bg-yellow-300' },
+        { value: 'Social', color: 'bg-purple-300' },
+        { value: 'Autre', color: 'bg-gray-300' },
     ];
 
     const handleOptionClick = (value: string, color: SetStateAction<string>) => {
@@ -40,7 +42,7 @@ export const Select = ({ onCategorySelect }: SelectProps) => {
     return (
         <div ref={selectRef} className="relative inline-block w-30">
             <div
-                className="appearance-none p-2 pe-6 flex items-center w-30 rounded-md bg-zinc-50 outline-orange-200 focus:outline-orange-200 mx-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] cursor-pointer"
+                className="appearance-none p-2 pe-6 flex items-center w-30 rounded-md bg-zinc-50 outline-orange-200 focus:outline-orange-200 ml-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {selectedColor && (
@@ -50,7 +52,7 @@ export const Select = ({ onCategorySelect }: SelectProps) => {
                 <img src='/arrow.svg' className='w-6' alt="Select" />
             </div>
             {isOpen && (
-                <ul className="absolute mt-1 w-full rounded-md bg-zinc-50 shadow-lg z-10">
+                <ul className="absolute mt-1 ml-4 rounded-md bg-zinc-50 shadow-lg z-10 w-32">
                     <li
                         className="p-2 cursor-pointer hover:bg-gray-200 flex items-center"
                         onClick={() => handleOptionClick('Catégorie', '')}
