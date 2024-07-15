@@ -5,7 +5,7 @@ type SelectProps = {
 };
 
 export const Select = ({ onCategorySelect }: SelectProps) => {
-    const [selectedOption, setSelectedOption] = useState('Catégorie');
+    const [selectedOption, setSelectedOption] = useState('Catégories');
     const [selectedColor, setSelectedColor] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const selectRef: RefObject<HTMLDivElement> = useRef(null);
@@ -55,10 +55,11 @@ export const Select = ({ onCategorySelect }: SelectProps) => {
                 <ul className="absolute mt-1 ml-4 rounded-md bg-zinc-50 shadow-lg z-10 w-32">
                     <li
                         className="p-2 cursor-pointer hover:bg-gray-200 flex items-center"
-                        onClick={() => handleOptionClick('Catégorie', '')}
+                        onClick={() => handleOptionClick('Catégories', '')}
                     >
-                        Catégorie
+                        Categories
                     </li>
+
                     {options.map((option) => (
                         <li
                             key={option.value}
