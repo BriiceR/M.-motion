@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 
-export const Idea = () => {
+export const Tools = () => {
     const { userData, fetchUserData } = useStore();
     const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ export const Idea = () => {
     return (
 
         <div className="flex flex-col justify-center gap-4 py-10">
-            <p className="text-center text-orange-300">Prochainement...idea</p>
+            <p className="text-center text-orange-300">Prochainement...tools</p>
         </div>
 
     );

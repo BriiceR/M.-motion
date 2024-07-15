@@ -9,7 +9,7 @@ const TabBar = () => {
         { to: '/app/list', icon: '/list.svg', alt: 'liste', className: 'w-8 h-8' },
         { to: '/app/chart', icon: '/chart.svg', alt: 'stat', className: 'w-8 h-8' },
         { to: '/app/dashboard', icon: '/emoji_4.svg', alt: '', className: 'w-12 h-12 p-2 bg-orange-300/50 rounded-md' },
-        { to: '/app/idea', icon: '/idea.svg', alt: 'idée', className: 'w-8 h-8' },
+        { to: '/app/tools', icon: '/tools.svg', alt: 'outils', className: 'w-8 h-8' },
         { to: '/app/profil', icon: '/profil.svg', alt: 'profil', className: 'w-8 h-8' },
     ];
 

@@ -5,7 +5,7 @@ import Login from './pages/logIn';
 import { List } from './pages/list';
 import { Chart } from './pages/chart';
 import { SignIn } from './pages/signIn';
-import { Idea } from './pages/idea';
+import { Tools } from './pages/tools';
 import { Profil } from './pages/profil';
 import Layout from './components/ui/layout';
 import { useEffect, useState } from 'react';
@@ -39,7 +39,7 @@ const App: React.FC = () => {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="list" element={<List />} />
               <Route path="chart" element={<Chart />} />
-              <Route path="idea" element={<Idea />} />
+              <Route path="tools" element={<Tools />} />
               <Route path="profil" element={<Profil />} />
             </Route>
           </Routes>
