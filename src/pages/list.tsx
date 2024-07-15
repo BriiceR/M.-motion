@@ -2,13 +2,20 @@ import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
-import PdfGenerator from '../components/pdfGenerator';
+import { Toggle } from '../components/ui/toggle';
+// import PdfGenerator from '../components/pdfGenerator';
 
 export const List = () => {
     const [, setLoading] = useState(false);
     const [showingResults, setShowingResults] = useState<any[]>([]);
     const navigate = useNavigate();
     const { userData, fetchUserData } = useStore();
+
+    const [filter, setFilter] = useState('Toute la liste');
+
+    const handleToggle = (value: string) => {
+        setFilter(value);
+    };
 
     const formatDate = (dateTimeString: string) => {
         const options: Intl.DateTimeFormatOptions = {
@@ -55,7 +62,11 @@ export const List = () => {
 
 
         < div className="flex flex-col justify-center gap-4 pb-24" >
-            <PdfGenerator data={showingResults} />
+            {/* <PdfGenerator data={showingResults} /> */}
+            <Toggle onToggle={handleToggle} />
+            <div className="mt-4">
+                <p>Filtre actuel : {filter}</p>
+            </div>
             {
                 showingResults
                     .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())
