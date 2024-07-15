@@ -10,8 +10,7 @@ export const List = () => {
     const [showingResults, setShowingResults] = useState<any[]>([]);
     const navigate = useNavigate();
     const { userData, fetchUserData } = useStore();
-
-    const [, setFilter] = useState('Toute la liste');
+    const [filter, setFilter] = useState('Toute la liste');
 
     const handleToggle = (value: string) => {
         setFilter(value);
@@ -52,7 +51,7 @@ export const List = () => {
     }, [userData]);
 
     const options = [
-        { value: 'Famille', color: 'bg-red-500' },
+        { value: 'Famille', color: 'bg-red-300' },
         { value: 'Couple', color: 'bg-blue-300' },
         { value: 'Santé', color: 'bg-green-300' },
         { value: 'Travail', color: 'bg-yellow-300' },
@@ -60,33 +59,31 @@ export const List = () => {
         { value: 'Autre', color: 'bg-gray-300' },
     ];
 
+    const filteredResults = filter === 'Positive'
+        ? showingResults.filter(data => data.mood === '/emoji_4.svg' || data.mood === '/emoji_5.svg')
+        : showingResults;
+
     return (
-
-
-        < div className="flex flex-col justify-center gap-4 pb-24" >
+        <div className="flex flex-col justify-center gap-4 pb-24">
             {/* <PdfGenerator data={showingResults} /> */}
             <Toggle onToggle={handleToggle} />
 
-            {
-                showingResults
-                    .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())
-                    .map((data: any, index: number) => (
-                        <div key={index} className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
-                            <div className="flex justify-between items-center">
-                                <img src={data.mood} className='w-12' alt="Selected Mood" />
-                                {data.category &&
-                                    <p className={`${options.find(opt => opt.value === data.category)?.color} text-white py-1 px-2 rounded-md`}>{data.category}</p>
-                                }
-                                <p className="text-sm">{formatDate(data.time)}</p>
-                            </div>
-
-                            <p className="mt-2">{data.emotion}</p>
-                            <p>{data.description}</p>
+            {filteredResults
+                .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())
+                .map((data: any, index: number) => (
+                    <div key={index} className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
+                        <div className="flex justify-between items-center">
+                            <img src={data.mood} className='w-12' alt="Selected Mood" />
+                            {data.category &&
+                                <p className={`${options.find(opt => opt.value === data.category)?.color} text-white py-1 px-2 rounded-md`}>{data.category}</p>
+                            }
+                            <p className="text-sm">{formatDate(data.time)}</p>
                         </div>
-                    ))
-            }
-        </div >
 
-
+                        <p className="mt-2">{data.emotion}</p>
+                        <p>{data.description}</p>
+                    </div>
+                ))}
+        </div>
     );
 };
