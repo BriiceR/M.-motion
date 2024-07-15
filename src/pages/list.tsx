@@ -64,9 +64,7 @@ export const List = () => {
         < div className="flex flex-col justify-center gap-4 pb-24" >
             {/* <PdfGenerator data={showingResults} /> */}
             <Toggle onToggle={handleToggle} />
-            <div className="mt-4">
-                <p>Filtre actuel : {filter}</p>
-            </div>
+
             {
                 showingResults
                     .sort((a: any, b: any) => new Date(b.time).getTime() - new Date(a.time).getTime())

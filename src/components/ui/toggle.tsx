@@ -24,7 +24,7 @@ export const Toggle: React.FC<ToggleProps> = ({ onToggle }) => {
     };
 
     return (
-        <div className="flex justify-center relative rounded-full text-black border border-gray-100">
+        <div className="flex justify-center relative rounded-full text-black border border-gray-100 mx-8 mb-2">
             <p
                 onClick={() => handleToggle("Toute la liste")}
                 className={`z-10 px-4 py-1 cursor-pointer w-full text-center`}
