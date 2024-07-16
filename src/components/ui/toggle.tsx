@@ -39,7 +39,7 @@ export const Toggle: React.FC<ToggleProps> = ({ onToggle }) => {
             </p>
             <div
                 style={{ left: getLeftPosition() }}
-                className={`bg-orange-300 rounded-full w-1/2 h-8 absolute z-0 transition-all duration-200`}
+                className={`bg-orange-300/50 rounded-full w-1/2 h-8 absolute z-0 transition-all duration-200`}
             ></div>
         </div>
     );

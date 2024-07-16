@@ -17,10 +17,11 @@ export const Validated: React.FC<ValidatedProps> = ({ mood, category, emotion, d
         console.log('Submitted to database');
 
         try {
+            const finalCategory = category === '' ? 'Autre' : category === 'Catégories' ? 'Autre' : category;
             const newData = {
                 time: new Date().toISOString(),
                 mood,
-                category,
+                category: finalCategory,
                 emotion,
                 description
             };
