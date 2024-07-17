@@ -1,6 +1,14 @@
 import React from 'react';
 import { updateDoc, doc, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
+import CryptoJS from 'crypto-js';
+
+
+const encryptionKey = import.meta.env.VITE_REACT_APP_ENCRYPTION_KEY;
+
+const encryptData = (data: string) => {
+    return CryptoJS.AES.encrypt(data, encryptionKey!).toString();
+};
 
 interface ValidatedProps {
     mood: string;
@@ -20,10 +28,10 @@ export const Validated: React.FC<ValidatedProps> = ({ mood, category, emotion, d
             const finalCategory = category === '' ? 'Autre' : category === 'Catégories' ? 'Autre' : category;
             const newData = {
                 time: new Date().toISOString(),
-                mood,
-                category: finalCategory,
-                emotion,
-                description
+                mood: encryptData(mood),
+                category: encryptData(finalCategory),
+                emotion: encryptData(emotion),
+                description: encryptData(description)
             };
             const userCollectionRef = doc(db, 'users', userId);
             await updateDoc(userCollectionRef, {

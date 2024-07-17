@@ -2,6 +2,21 @@ import { create } from 'zustand';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
+import CryptoJS from 'crypto-js';
+
+// Get the encryption key from environment variable
+const encryptionKey = import.meta.env.VITE_REACT_APP_ENCRYPTION_KEY;
+
+// Function to decrypt data
+const decryptData = (ciphertext) => {
+  try {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  } catch (error) {
+    console.error('Error decrypting data:', error);
+    return ciphertext; // Return the original ciphertext if decryption fails
+  }
+};
 
 export const useStore = create((set) => ({
   user: null, // Initial state for user
@@ -17,7 +32,16 @@ export const useStore = create((set) => ({
         const userCollectionRef = doc(db, 'users', userId);
         const userDoc = await getDoc(userCollectionRef);
         if (userDoc.exists()) {
-          set({ userData: userDoc.data() });
+          const userData = userDoc.data();
+          // Decrypt the data
+          const decryptedData = userData.data.map((item) => ({
+            ...item,
+            mood: decryptData(item.mood),
+            category: decryptData(item.category),
+            emotion: decryptData(item.emotion),
+            description: decryptData(item.description),
+          }));
+          set({ userData: { data: decryptedData } });
         } else {
           set({ userData: null });
         }
@@ -27,4 +51,3 @@ export const useStore = create((set) => ({
     });
   }
 }));
-
