@@ -19,7 +19,7 @@ export const Dashboard = () => {
     const [category, setCategory] = useState('');
 
     const handleDataSubmitted = () => {
-        console.log(mood, emotion, description, category);
+        // console.log(mood, emotion, description, category);
         setMood('');
         setEmotion('');
         setDescription('');

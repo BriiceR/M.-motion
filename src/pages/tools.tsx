@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 
 export const Tools = () => {
-    const { userData, fetchUserData } = useStore();
+    const { fetchUserData } = useStore();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export const Tools = () => {
         };
     }, [fetchUserData, navigate]);
 
-    console.log(userData)
+    // console.log(userData)
 
     return (
 

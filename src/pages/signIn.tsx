@@ -33,7 +33,12 @@ export const SignIn = () => {
                     lastName: '',
                     phone: '',
                     professionals: [],
-                    exercises: []
+                    exercises: [],
+                    dateOfBirth: '',
+                    profilePicture: '',
+                    notifications: true,
+                    invoices: [],
+                    userMail: email
                 }
             });
 
