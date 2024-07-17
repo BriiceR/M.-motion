@@ -42,6 +42,7 @@ export const useStore = create((set) => ({
             description: decryptData(item.description),
           }));
           set({ userData: { data: decryptedData } });
+          // console.log('Personal Data (Not Encrypted):', userData);
         } else {
           set({ userData: null });
         }

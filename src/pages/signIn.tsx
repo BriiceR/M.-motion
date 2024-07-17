@@ -15,7 +15,6 @@ export const SignIn = () => {
     const db = getFirestore(app); // Accès à la base de données Firestore
     const navigate = useNavigate();
 
-
     const handleSignIn = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -28,7 +27,15 @@ export const SignIn = () => {
 
             // Création du document utilisateur dans Firestore
             const userRef = doc(db, 'users', user.uid);
-            await setDoc(userRef, {}); // Création d'un document vide
+            await setDoc(userRef, {
+                personalData: {
+                    firstName: '',
+                    lastName: '',
+                    phone: '',
+                    professionals: [],
+                    exercises: []
+                }
+            });
 
             navigate('/app/dashboard');
         } catch (error: any) {
@@ -79,4 +86,3 @@ export const SignIn = () => {
         </div>
     );
 }
-
