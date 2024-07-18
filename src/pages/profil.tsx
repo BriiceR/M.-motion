@@ -5,7 +5,7 @@ import { useStore } from '../store/useStore';
 import Logout from '../components/logOut';
 
 export const Profil = () => {
-    const { personalData, fetchUserData } = useStore();
+    const { userData, personalData, fetchUserData } = useStore();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,29 +23,53 @@ export const Profil = () => {
         };
     }, [fetchUserData, navigate]);
 
-    // console.log(userData);
-    // console.log(personalData);
+    console.log(userData);
+    console.log(personalData);
+
     return (
-        <div className="flex flex-col justify-center gap-4 py-10">
-            <p className="text-center text-orange-300">Prochainement...profil</p>
-            <Logout />
+        <div className="flex flex-col justify-center gap-4 py-4">
 
             {personalData && (
-                <div>
-                    <h2 className="text-center text-2xl">Données Personnelles</h2>
-                    <ul className="list-disc list-inside">
-                        <li>Nom: {personalData.lastName || "Non spécifié"}</li>
-                        <li>Prénom: {personalData.firstName || "Non spécifié"}</li>
-                        <li>Téléphone: {personalData.phone || "Non spécifié"}</li>
-                        <li>Liste de professionnels: {personalData.professionals && personalData.professionals.length > 0 ? personalData.professionals.join(', ') : "Aucun"}</li>
-                        <li>Liste d'exercices: {personalData.exercises && personalData.exercises.length > 0 ? personalData.exercises.join(', ') : "Aucun"}</li>
-                        <li>Notifications push: {personalData.notifications ? "Oui" : "Non"}</li>                        <li>Facture: {personalData.invoice || "Non spécifié"}</li>
-                        <li>Date de naissance: {personalData.dateOfBirth || "Non spécifié"}</li>
-                        <li>Photo de profil: {personalData.profilePicture || "Non spécifié"}</li>
-                        <li>Mail: {personalData.userMail || "Non spécifié"}</li>
-                    </ul>
-                </div>
+                <>
+                    <div className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
+                        <div className='flex justify-between items-top mb-4'>
+                            <img
+                                src={personalData.profilePicture || '/profilDefault.svg'}
+                                alt="Photo de profil"
+                                className="w-16 h-16 rounded-full object-cover"
+                            />
+                            <h2 className="text-xl font-bold text-orange-300">VOUS</h2>
+                            <img src="/pen.svg" alt="Modifier votre profil" className="w-8 h-8 rounded-md " />
+                        </div>
+                        <div className='flex justify-between items-top mb-4'>
+                            <div>
+                                <p>Nom: {personalData.lastName || "Non spécifié"}</p>
+                                <p>Prénom: {personalData.firstName || "Non spécifié"}</p>
+                            </div>
+                            <p>Age: {personalData.dateOfBirth || "Non spécifié"}</p>
+                        </div>
+                        <hr className='mb-4' />
+                        <div>
+                            <p>Téléphone: {personalData.phone || "Non spécifié"}</p>
+                            <p>Mail: {personalData.userMail || "Non spécifié"}</p>
+                        </div>
+                    </div>
+                    <div className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
+                        <p>Liste de professionnels: {personalData.professionals && personalData.professionals.length > 0 ? personalData.professionals.join(', ') : "Aucun"}</p>
+                    </div>
+                    <div className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
+                        <p>Facture: {personalData.invoice || "Non spécifié"}</p>
+                    </div>
+                    {/* <div className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50 mb-8">
+                        <p>Liste d'exercices: {personalData.exercises && personalData.exercises.length > 0 ? personalData.exercises.join(', ') : "Aucun"}</p>
+                    </div>
+                    <div className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50 mb-8">
+                        <p>Notifications push: {personalData.notifications ? "Oui" : "Non"}</p>
+                    </div> */}
+                </>
             )}
+
+            <Logout />
         </div>
     );
 };
