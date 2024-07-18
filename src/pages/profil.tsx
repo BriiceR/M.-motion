@@ -5,7 +5,7 @@ import { useStore } from '../store/useStore';
 import Logout from '../components/logOut';
 
 export const Profil = () => {
-    const { userData, personalData, fetchUserData } = useStore();
+    const { personalData, fetchUserData } = useStore();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,8 +23,8 @@ export const Profil = () => {
         };
     }, [fetchUserData, navigate]);
 
-    console.log(userData);
-    console.log(personalData);
+    // console.log(userData);
+    // console.log(personalData);
 
     return (
         <div className="flex flex-col justify-center gap-4 py-4">

@@ -1,14 +1,7 @@
 import React from 'react';
 import { updateDoc, doc, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
-import CryptoJS from 'crypto-js';
-
-
-const encryptionKey = import.meta.env.VITE_REACT_APP_ENCRYPTION_KEY;
-
-const encryptData = (data: string) => {
-    return CryptoJS.AES.encrypt(data, encryptionKey!).toString();
-};
+import { encryptData } from '../utils/encrypt';
 
 interface ValidatedProps {
     mood: string;
@@ -51,4 +44,4 @@ export const Validated: React.FC<ValidatedProps> = ({ mood, category, emotion, d
             </button>
         </div>
     );
-}
+};

@@ -3,9 +3,7 @@ import { create } from 'zustand';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
-import CryptoJS from 'crypto-js';
-
-const encryptionKey = import.meta.env.VITE_REACT_APP_ENCRYPTION_KEY;
+import { decryptData } from '../utils/decrypt';
 
 // Define the types for your store
 interface StoreState {
@@ -14,17 +12,6 @@ interface StoreState {
   personalData: any | null;
   fetchUserData: () => void;
 }
-
-const decryptData = (ciphertext: string | CryptoJS.lib.CipherParams) => {
-  try {
-    const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
-    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-    return decrypted || ciphertext;
-  } catch (error) {
-    console.error('Error decrypting data:', error);
-    return ciphertext;
-  }
-};
 
 export const useStore = create<StoreState>((set) => ({
   user: null,
@@ -56,17 +43,18 @@ export const useStore = create<StoreState>((set) => ({
 
           // Decrypt personal data
           const decryptedPersonalData = {
-            firstName: decryptData(userData.personalData.firstName || ''),
-            lastName: decryptData(userData.personalData.lastName || ''),
-            phone: decryptData(userData.personalData.phone || ''),
-            notifications: decryptData(userData.personalData.notifications || ''),
-            dateOfBirth: decryptData(userData.personalData.dateOfBirth || ''),
-            profilePicture: decryptData(userData.personalData.profilePicture || ''),
-            professionals: userData.personalData.professionals?.map(decryptData) || [],
-            exercises: userData.personalData.exercises?.map(decryptData) || [],
-            invoices: userData.personalData.invoices?.map(decryptData) || [],
-            userMail: userData.personalData.userMail || '',
+            firstName: decryptData(userData.personalData?.firstName || ''),
+            lastName: decryptData(userData.personalData?.lastName || ''),
+            phone: decryptData(userData.personalData?.phone || ''),
+            notifications: userData.personalData?.notifications ? decryptData(userData.personalData.notifications.toString()) : '',
+            dateOfBirth: decryptData(userData.personalData?.dateOfBirth || ''),
+            profilePicture: decryptData(userData.personalData?.profilePicture || ''),
+            professionals: userData.personalData?.professionals?.map(decryptData) || [],
+            exercises: userData.personalData?.exercises?.map(decryptData) || [],
+            invoices: userData.personalData?.invoices?.map(decryptData) || [],
+            userMail: userData.personalData?.userMail || '',
           };
+
           set({ userData: { data: decryptedData }, personalData: decryptedPersonalData });
         } else {
           set({ userData: null, personalData: null });
