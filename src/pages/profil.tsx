@@ -3,8 +3,9 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { updateDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
-import { encryptData } from '../utils/encrypt'; // Assurez-vous que ce chemin est correct
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '../firebase/firebaseConfig';
+import { encryptData } from '../utils/encrypt';
 import Logout from '../components/logOut';
 
 export const Profil = () => {
@@ -16,8 +17,9 @@ export const Profil = () => {
         lastName: '',
         phone: '',
         dateOfBirth: '',
-        profilePicture: ''
+        profilePicture: '',
     });
+    const [profileImage, setProfileImage] = useState<File | null>(null);
 
     useEffect(() => {
         if (personalData) {
@@ -58,6 +60,12 @@ export const Profil = () => {
         }));
     };
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setProfileImage(e.target.files[0]);
+        }
+    };
+
     const handleSaveClick = async () => {
         const auth = getAuth();
         const userId = auth.currentUser?.uid;
@@ -66,15 +74,26 @@ export const Profil = () => {
             return;
         }
 
-        const encryptedData = {
-            firstName: encryptData(formData.firstName),
-            lastName: encryptData(formData.lastName),
-            phone: encryptData(formData.phone),
-            dateOfBirth: encryptData(formData.dateOfBirth),
-            profilePicture: encryptData(formData.profilePicture),
-        };
+        let profilePictureUrl = formData.profilePicture;
 
         try {
+            if (profileImage) {
+                // Utilisez le même chemin pour remplacer l'ancienne image
+                const storageRef = ref(storage, `profilePictures/${userId}/profilePicture.jpg`);
+                // console.log('Uploading to:', storageRef.fullPath);
+                await uploadBytes(storageRef, profileImage);
+                profilePictureUrl = await getDownloadURL(storageRef);
+                // console.log('File uploaded successfully, URL:', profilePictureUrl);
+            }
+
+            const encryptedData = {
+                firstName: encryptData(formData.firstName),
+                lastName: encryptData(formData.lastName),
+                phone: encryptData(formData.phone),
+                dateOfBirth: encryptData(formData.dateOfBirth),
+                profilePicture: encryptData(profilePictureUrl),
+            };
+
             const userCollectionRef = doc(db, 'users', userId);
             await updateDoc(userCollectionRef, {
                 'personalData.firstName': encryptedData.firstName,
@@ -86,13 +105,12 @@ export const Profil = () => {
             setIsEditing(false);
             fetchUserData(); // Refresh the data
         } catch (error) {
-            console.error('Error updating data in Firestore:', error);
+            console.error('Error updating data in Firestore or uploading file to Firebase Storage:', error);
         }
     };
 
     return (
         <div className="flex flex-col justify-center gap-4 py-4">
-
             {personalData && (
                 <>
                     <div className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
@@ -152,6 +170,9 @@ export const Profil = () => {
                                     />
                                     <p>Mail: {personalData.userMail || "Non spécifié"}</p>
                                 </div>
+                                <div>
+                                    <input type="file" accept="image/*" onChange={handleImageChange} className="mb-2 p-2 border rounded" />
+                                </div>
                                 <button
                                     onClick={handleSaveClick}
                                     className="mt-4 py-2 px-4 bg-green-500 text-white rounded-md"
@@ -184,7 +205,6 @@ export const Profil = () => {
                     </div>
                 </>
             )}
-
             <Logout />
         </div>
     );

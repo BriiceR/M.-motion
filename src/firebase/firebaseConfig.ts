@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 export const firebaseConfig = {
   apiKey: import.meta.env.VITE_REACT_APP_API_KEY,
@@ -14,6 +15,7 @@ export const firebaseConfig = {
 // Initialiser Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 // Configurer la persistance de l'état d'authentification
 const auth = getAuth(app);
@@ -45,4 +47,4 @@ const createUserCollection = async (userId: string) => {
   }
 };
 
-export { app, db, createUserCollection }; // Exporter l'application et la base de données Firebase ainsi que la fonction pour créer une collection utilisateur
+export { app, db, createUserCollection, storage }; // Exporter l'application et la base de données Firebase ainsi que la fonction pour créer une collection utilisateur
