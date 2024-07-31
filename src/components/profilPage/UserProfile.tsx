@@ -85,7 +85,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ personalData, fetchUserData }
                 'personalData.profilePicture': encryptedData.profilePicture
             });
             setIsEditing(false);
-            fetchUserData(); // Refresh the data
+            fetchUserData();
         } catch (error) {
             console.error('Error updating data in Firestore or uploading file to Firebase Storage:', error);
         }
@@ -100,19 +100,23 @@ const UserProfile: React.FC<UserProfileProps> = ({ personalData, fetchUserData }
                         alt="Photo de profil"
                         className="w-16 h-16 rounded-full object-cover"
                     />
-                    <button
-                        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300"
-                        onClick={() => document.getElementById('fileInput')?.click()}
-                    >
-                        Changer
-                    </button>
-                    <input
-                        type="file"
-                        id="fileInput"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="hidden"
-                    />
+                    {isEditing && (
+                        <>
+                            <button
+                                className="absolute bottom-0 right-0 bg-emerald-400 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                                onClick={() => document.getElementById('fileInput')?.click()}
+                            >
+                                +
+                            </button>
+                            <input
+                                type="file"
+                                id="fileInput"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="hidden"
+                            />
+                        </>
+                    )}
                 </div>
                 <h2 className="text-xl font-bold text-orange-300">VOUS</h2>
                 <img
@@ -124,7 +128,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ personalData, fetchUserData }
             </div>
             {isEditing ? (
                 <>
-                    <div className='flex justify-between items-center mb-4'>
+                    <div className='flex justify-between items-center mb-4 gap-2'>
                         <div>
                             <input
                                 type="text"
@@ -132,7 +136,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ personalData, fetchUserData }
                                 value={formData.lastName}
                                 onChange={handleInputChange}
                                 placeholder="Nom"
-                                className="mb-2 p-2 border rounded w-full"
+                                className="mb-2 p-2 border rounded w-30"
                             />
                             <input
                                 type="text"
@@ -140,7 +144,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ personalData, fetchUserData }
                                 value={formData.firstName}
                                 onChange={handleInputChange}
                                 placeholder="Prénom"
-                                className="mb-2 p-2 border rounded w-full"
+                                className="mb-2 p-2 border rounded w-30"
                             />
                         </div>
                         <input
@@ -148,8 +152,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ personalData, fetchUserData }
                             name="dateOfBirth"
                             value={formData.dateOfBirth}
                             onChange={handleInputChange}
-                            placeholder="Date de naissance"
-                            className="mb-2 p-2 border rounded w-full"
+                            placeholder="Age"
+                            className="mb-2 p-2 border rounded w-16 "
                         />
                     </div>
                     <hr className='mb-4' />
@@ -166,7 +170,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ personalData, fetchUserData }
                     </div>
                     <button
                         onClick={handleSaveClick}
-                        className="mt-4 py-2 px-4 bg-green-500 text-white rounded-md"
+                        className="py-3 mt-4 bg-emerald-400 text-white w-full rounded-md font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
                     >
                         Enregistrer
                     </button>
