@@ -118,7 +118,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ personalData, fetchUserData }
                         </>
                     )}
                 </div>
-                <h2 className="text-xl font-bold text-orange-300">VOUS</h2>
+                <h2 className="text-xl mb-8 font-bold text-orange-300">VOUS</h2>
                 <img
                     src="/pen.svg"
                     alt="Modifier votre profil"
