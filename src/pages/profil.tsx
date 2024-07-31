@@ -1,37 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
-import { updateDoc, doc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '../firebase/firebaseConfig';
-import { encryptData } from '../utils/encrypt';
 import Logout from '../components/logOut';
+import UserProfile from '../components/profilPage/UserProfile';
 
 export const Profil = () => {
     const { personalData, fetchUserData } = useStore();
     const navigate = useNavigate();
-    const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        dateOfBirth: '',
-        profilePicture: '',
-    });
-    const [profileImage, setProfileImage] = useState<File | null>(null);
-
-    useEffect(() => {
-        if (personalData) {
-            setFormData({
-                firstName: personalData.firstName || '',
-                lastName: personalData.lastName || '',
-                phone: personalData.phone || '',
-                dateOfBirth: personalData.dateOfBirth || '',
-                profilePicture: personalData.profilePicture || ''
-            });
-        }
-    }, [personalData]);
 
     useEffect(() => {
         const auth = getAuth();
@@ -48,155 +24,11 @@ export const Profil = () => {
         };
     }, [fetchUserData, navigate]);
 
-    const handleEditClick = () => {
-        setIsEditing(true);
-    };
-
-    const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setProfileImage(e.target.files[0]);
-        }
-    };
-
-    const handleSaveClick = async () => {
-        const auth = getAuth();
-        const userId = auth.currentUser?.uid;
-        if (!userId) {
-            console.error('User not authenticated');
-            return;
-        }
-
-        let profilePictureUrl = formData.profilePicture;
-
-        try {
-            if (profileImage) {
-                // Utilisez le même chemin pour remplacer l'ancienne image
-                const storageRef = ref(storage, `profilePictures/${userId}/profilePicture.jpg`);
-                // console.log('Uploading to:', storageRef.fullPath);
-                await uploadBytes(storageRef, profileImage);
-                profilePictureUrl = await getDownloadURL(storageRef);
-                // console.log('File uploaded successfully, URL:', profilePictureUrl);
-            }
-
-            const encryptedData = {
-                firstName: encryptData(formData.firstName),
-                lastName: encryptData(formData.lastName),
-                phone: encryptData(formData.phone),
-                dateOfBirth: encryptData(formData.dateOfBirth),
-                profilePicture: encryptData(profilePictureUrl),
-            };
-
-            const userCollectionRef = doc(db, 'users', userId);
-            await updateDoc(userCollectionRef, {
-                'personalData.firstName': encryptedData.firstName,
-                'personalData.lastName': encryptedData.lastName,
-                'personalData.phone': encryptedData.phone,
-                'personalData.dateOfBirth': encryptedData.dateOfBirth,
-                'personalData.profilePicture': encryptedData.profilePicture
-            });
-            setIsEditing(false);
-            fetchUserData(); // Refresh the data
-        } catch (error) {
-            console.error('Error updating data in Firestore or uploading file to Firebase Storage:', error);
-        }
-    };
-
     return (
         <div className="flex flex-col justify-center gap-4 py-4">
             {personalData && (
                 <>
-                    <div className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
-                        <div className='flex justify-between items-top mb-4'>
-                            <img
-                                src={personalData.profilePicture || '/profilDefault.svg'}
-                                alt="Photo de profil"
-                                className="w-16 h-16 rounded-full object-cover"
-                            />
-                            <h2 className="text-xl font-bold text-orange-300">VOUS</h2>
-                            <img
-                                src="/pen.svg"
-                                alt="Modifier votre profil"
-                                className="w-8 h-8 rounded-md cursor-pointer"
-                                onClick={handleEditClick}
-                            />
-                        </div>
-                        {isEditing ? (
-                            <>
-                                <div className='flex justify-between items-top mb-4'>
-                                    <div>
-                                        <input
-                                            type="text"
-                                            name="lastName"
-                                            value={formData.lastName}
-                                            onChange={handleInputChange}
-                                            placeholder="Nom"
-                                            className="mb-2 p-2 border rounded"
-                                        />
-                                        <input
-                                            type="text"
-                                            name="firstName"
-                                            value={formData.firstName}
-                                            onChange={handleInputChange}
-                                            placeholder="Prénom"
-                                            className="mb-2 p-2 border rounded"
-                                        />
-                                    </div>
-                                    <input
-                                        type="text"
-                                        name="dateOfBirth"
-                                        value={formData.dateOfBirth}
-                                        onChange={handleInputChange}
-                                        placeholder="Date de naissance"
-                                        className="mb-2 p-2 border rounded"
-                                    />
-                                </div>
-                                <hr className='mb-4' />
-                                <div>
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleInputChange}
-                                        placeholder="Téléphone"
-                                        className="mb-2 p-2 border rounded"
-                                    />
-                                    <p>Mail: {personalData.userMail || "Non spécifié"}</p>
-                                </div>
-                                <div>
-                                    <input type="file" accept="image/*" onChange={handleImageChange} className="mb-2 p-2 border rounded" />
-                                </div>
-                                <button
-                                    onClick={handleSaveClick}
-                                    className="mt-4 py-2 px-4 bg-green-500 text-white rounded-md"
-                                >
-                                    Enregistrer
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <div className='flex justify-between items-top mb-4'>
-                                    <div>
-                                        <p>Nom: {personalData.lastName || "Non spécifié"}</p>
-                                        <p>Prénom: {personalData.firstName || "Non spécifié"}</p>
-                                    </div>
-                                    <p>Age: {personalData.dateOfBirth || "Non spécifié"}</p>
-                                </div>
-                                <hr className='mb-4' />
-                                <div>
-                                    <p>Téléphone: {personalData.phone || "Non spécifié"}</p>
-                                    <p>Mail: {personalData.userMail || "Non spécifié"}</p>
-                                </div>
-                            </>
-                        )}
-                    </div>
+                    <UserProfile personalData={personalData} fetchUserData={fetchUserData} />
                     <div className="p-4 rounded-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-zinc-50">
                         <p>Liste de professionnels: {personalData.professionals && personalData.professionals.length > 0 ? personalData.professionals.join(', ') : "Aucun"}</p>
                     </div>
